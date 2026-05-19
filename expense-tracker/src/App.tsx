@@ -1,13 +1,23 @@
 import { useState } from "react";
-import "./App.css";
 
 function App() {
-  const [expenses, setExpenses] = useState<any[]>([]);
-
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
   return (
     <div className="app">
       <h1>Expense Tracker</h1>
-      <p>Ready to start tracking expenses</p>
+      <input
+        type="number"
+        placeholder="Enter expense amount"
+        value={amount}
+        onChange={(e) => setAmount(Number(e.target.value))}
+      />
+      <input
+        type="text"
+        placeholder="Enter expense description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
     </div>
   );
 }
