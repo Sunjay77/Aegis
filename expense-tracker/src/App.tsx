@@ -4,6 +4,12 @@ function App() {
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Food");
+  const handleAddExpense = () => {
+    console.log('Button clicked')
+    console.log('Amount:', amount)
+    console.log('Description:', description)
+    console.log('Category:', category)
+  }
   return (
     <div className="app">
       <h1>Expense Tracker</h1>
@@ -28,6 +34,7 @@ function App() {
         <option value="Entertainment">Entertainment</option>
         <option value="Utilities">Utilities</option>
       </select>
+      <button onClick={handleAddExpense}>Add Expense</button>
     </div>
   );
 }
