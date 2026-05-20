@@ -4,12 +4,17 @@ function App() {
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Food");
+  const [expenses, setExpenses] = useState<any[]>([]);
   const handleAddExpense = () => {
-    console.log('Button clicked')
-    console.log('Amount:', amount)
-    console.log('Description:', description)
-    console.log('Category:', category)
-  }
+    const newExpense = {
+      id: Date.now(),
+      amount,
+      description,
+      category
+    };
+    setExpenses([newExpense, ...expenses]);
+    console.log('Expense added:', newExpense);
+  };
   return (
     <div className="app">
       <h1>Expense Tracker</h1>
@@ -35,6 +40,12 @@ function App() {
         <option value="Utilities">Utilities</option>
       </select>
       <button onClick={handleAddExpense}>Add Expense</button>
+      <h2>Expenses List</h2>
+      {expenses.map(expense => (
+        <div key={expense.id}>
+          <p>{expense.description} - ${expense.amount}({expense.category})</p>
+        </div>
+      ))}
     </div>
   );
 }
