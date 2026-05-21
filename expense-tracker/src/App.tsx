@@ -1,20 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+type Expense = {
+  id: number;
+  amount: string;
+  description: string;
+  category: string;
+  date: string;
+};
 
 function App() {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<string>("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Food");
-  const [expenses, setExpenses] = useState<any[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>(() => {
+    const saved = localStorage.getItem("expenses");
+    return saved ? (JSON.parse(saved) as Expense[]) : [];
+  });
+  // Save to localStorage whenever expenses change
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
+
   const handleAddExpense = () => {
+    if (!amount || !description) {
+      console.log("Please fill in all fields!");
+      return;
+    }
+
+    console.log("Button clicked!");
+    console.log("Amount:", amount);
+    console.log("Description:", description);
+    console.log("Category:", category);
+
     const newExpense = {
       id: Date.now(),
-      amount,
-      description,
-      category
+      amount: amount,
+      description: description,
+      category: category,
+      date: new Date().toLocaleDateString(),
     };
     setExpenses([newExpense, ...expenses]);
-    console.log('Expense added:', newExpense);
+    console.log("Expense added:", newExpense);
+
+    //Clear the form
+    setAmount("");
+    setDescription("");
+    setCategory("Food");
   };
+  const totalSpending = expenses.reduce(
+    (sum, expense) => sum + parseFloat(expense.amount),
+    0,
+  );
   return (
     <div className="app">
       <h1>Expense Tracker</h1>
@@ -22,7 +58,7 @@ function App() {
         type="number"
         placeholder="Enter expense amount"
         value={amount}
-        onChange={(e) => setAmount(Number(e.target.value))}
+        onChange={(e) => setAmount(e.target.value)}
       />
       <input
         type="text"
@@ -30,20 +66,28 @@ function App() {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      >
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="Food">Food</option>
         <option value="Transportation">Transportation</option>
         <option value="Entertainment">Entertainment</option>
         <option value="Utilities">Utilities</option>
       </select>
       <button onClick={handleAddExpense}>Add Expense</button>
+      <h2>Total Spending: Rs {totalSpending.toFixed(2)}</h2>
       <h2>Expenses List</h2>
-      {expenses.map(expense => (
+      {expenses.map((expense) => (
         <div key={expense.id}>
-          <p>{expense.description} - ${expense.amount}({expense.category})</p>
+          <p>
+            {expense.description} - Rs {expense.amount}({expense.category} -{" "}
+            {expense.date})
+          </p>
+          <button
+            onClick={() => {
+              setExpenses(expenses.filter((e) => e.id !== expense.id));
+            }}
+          >
+            Delete
+          </button>
         </div>
       ))}
     </div>
