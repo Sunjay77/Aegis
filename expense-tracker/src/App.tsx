@@ -52,6 +52,15 @@ function App() {
     (sum, expense) => sum + parseFloat(expense.amount),
     0,
   );
+
+  const categorySpending = expenses.reduce(
+    (acc, expense) => {
+      const key = expense.category;
+      acc[key] = (acc[key] || 0) + parseFloat(expense.amount);
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
   return (
     <div className="app">
       <nav className="navbar">
@@ -65,42 +74,35 @@ function App() {
         </div>
       </nav>
       <div className="form-container">
-        <input
-          type="number"
-          placeholder="Enter expense amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Enter expense description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="Food">Food</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Utilities">Utilities</option>
-        </select>
-        <button onClick={handleAddExpense}>Add Expense</button>
-        <h2>Total Spending: Rs {totalSpending.toFixed(2)}</h2>
-        <h2>Expenses List</h2>
-        {expenses.map((expense) => (
-          <div key={expense.id}>
-            <p>
-              {expense.description} - Rs {expense.amount}({expense.category} -{" "}
-              {expense.date})
-            </p>
-            <button
-              onClick={() => {
-                setExpenses(expenses.filter((e) => e.id !== expense.id));
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+        <div className="form-row">
+          <input
+            type="number"
+            placeholder="Enter expense amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Enter expense description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+          </select>
+        </div>
+        <button className="btnExpense" onClick={handleAddExpense}>
+          Add Expense
+        </button>
+        <div className="summary-container">
+          
+        </div>
       </div>
     </div>
   );

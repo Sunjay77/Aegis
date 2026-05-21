@@ -1,10 +1,10 @@
-/* Navbar */
 
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-    background: #ffffff;
+  background: #ffffff;
   padding: 15px 20px;
   border-radius: 8px;
 }
@@ -27,4 +27,86 @@
   background: #f0f8f0;
   padding: 8px 15px;
   border-radius: 20px;
+}
+
+/* form container */
+
+.form-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-container h2 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.form-row {
+  display: flex;
+  gap:12px;
+}
+
+.form-row input,
+.form-row select {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+
+/* input fields */
+
+.input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+/*button*/
+.button {
+  width: 100%;
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #45a049;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Summary container */
+
+.summary-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.summary-card h2 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #666;
+  letter-spacing: 0.5px;
 }
