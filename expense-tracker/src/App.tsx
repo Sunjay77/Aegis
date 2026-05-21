@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./App.css";
 
 type Expense = {
   id: number;
@@ -53,43 +54,54 @@ function App() {
   );
   return (
     <div className="app">
-      <h1>Expense Tracker</h1>
-      <input
-        type="number"
-        placeholder="Enter expense amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Enter expense description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="Food">Food</option>
-        <option value="Transportation">Transportation</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Utilities">Utilities</option>
-      </select>
-      <button onClick={handleAddExpense}>Add Expense</button>
-      <h2>Total Spending: Rs {totalSpending.toFixed(2)}</h2>
-      <h2>Expenses List</h2>
-      {expenses.map((expense) => (
-        <div key={expense.id}>
-          <p>
-            {expense.description} - Rs {expense.amount}({expense.category} -{" "}
-            {expense.date})
-          </p>
-          <button
-            onClick={() => {
-              setExpenses(expenses.filter((e) => e.id !== expense.id));
-            }}
-          >
-            Delete
-          </button>
+      <nav className="navbar">
+        <div className="nav-brand">
+          <h1>Aegis</h1>
         </div>
-      ))}
+        <div className="nav-total">
+          <span className="total-display">
+            Total Spending: Rs {totalSpending.toFixed(2)}
+          </span>
+        </div>
+      </nav>
+      <div className="form-container">
+        <input
+          type="number"
+          placeholder="Enter expense amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Enter expense description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="Food">Food</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Utilities">Utilities</option>
+        </select>
+        <button onClick={handleAddExpense}>Add Expense</button>
+        <h2>Total Spending: Rs {totalSpending.toFixed(2)}</h2>
+        <h2>Expenses List</h2>
+        {expenses.map((expense) => (
+          <div key={expense.id}>
+            <p>
+              {expense.description} - Rs {expense.amount}({expense.category} -{" "}
+              {expense.date})
+            </p>
+            <button
+              onClick={() => {
+                setExpenses(expenses.filter((e) => e.id !== expense.id));
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
