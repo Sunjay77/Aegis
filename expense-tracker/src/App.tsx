@@ -1,37 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
-
-type Expense = {
-  id: number;
-  amount: string;
-  description: string;
-  category: string;
-  date: string;
-};
+import type { Expense } from "./types/expense.ts";
+import { GetTotalSpending, GetCategorySpending } from "./utils/calculations.ts";
+import { useExpenses } from "./hooks/useExpenses.ts";
 
 function App() {
   const [amount, setAmount] = useState<string>("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Food");
-  const [expenses, setExpenses] = useState<Expense[]>(() => {
-    const saved = localStorage.getItem("expenses");
-    return saved ? (JSON.parse(saved) as Expense[]) : [];
-  });
+  const { expenses, addExpense, deleteExpense } = useExpenses();
+  const totalSpending = GetTotalSpending(expenses);
+  const categorySpending = GetCategorySpending(expenses);
   // Save to localStorage whenever expenses change
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }, [expenses]);
 
   const handleAddExpense = () => {
     if (!amount || !description) {
       console.log("Please fill in all fields!");
       return;
     }
-
-    console.log("Button clicked!");
-    console.log("Amount:", amount);
-    console.log("Description:", description);
-    console.log("Category:", category);
 
     const newExpense = {
       id: Date.now(),
@@ -40,7 +26,7 @@ function App() {
       category: category,
       date: new Date().toLocaleDateString(),
     };
-    setExpenses([newExpense, ...expenses]);
+    addExpense(newExpense);
     console.log("Expense added:", newExpense);
 
     //Clear the form
@@ -48,19 +34,7 @@ function App() {
     setDescription("");
     setCategory("Food");
   };
-  const totalSpending = expenses.reduce(
-    (sum, expense) => sum + parseFloat(expense.amount),
-    0,
-  );
 
-  const categorySpending = expenses.reduce(
-    (acc, expense) => {
-      const key = expense.category;
-      acc[key] = (acc[key] || 0) + parseFloat(expense.amount);
-      return acc;
-    },
-    {} as Record<string, number>,
-  );
   return (
     <div className="app">
       <nav className="navbar">
@@ -100,8 +74,50 @@ function App() {
         <button className="btnExpense" onClick={handleAddExpense}>
           Add Expense
         </button>
-        <div className="summary-container">
-          
+      </div>
+      <div className="expenses-container">
+        <h2>Expenses List</h2>
+        {expenses.length === 0 ? (
+          <p className="empty-text">No expenses added yet</p>
+        ) : (
+          expenses.map((expense: Expense) => (
+            <div key={expense.id} className="expense-item">
+              <div className="expense-info">
+                <p className="expense-description">{expense.description}</p>
+                <p className="expense-meta">
+                  {expense.category} - {expense.date}
+                </p>
+              </div>
+              <span className="expense-amount">₹{expense.amount}</span>
+              <button
+                className="delete-btn"
+                onClick={() => {
+                  deleteExpense(expense.id);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        )}
+      </div>
+      <div className="summary-container">
+        <div className="summary-card">
+          <h3>Spending by Category</h3>
+          {Object.entries(categorySpending).length === 0 ? (
+            <p className="empty-text">No expenses yet</p>
+          ) : (
+            <div className="category-list">
+              {Object.entries(categorySpending).map(([cat, amount]) => (
+                <div key={cat} className="category-item">
+                  <span className="category-name">{cat}</span>
+                  <span className="category-amount">
+                    ₹{(amount as number).toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
