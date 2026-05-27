@@ -23,7 +23,7 @@ function ExpenseList({ expenses, deleteExpense }: Props) {
               </p>
             </div>
 
-            <span className="expense-amount">₹{expense.amount}</span>
+            <span className="expense-amount">Rs.{expense.amount}</span>
 
             <button
               className="delete-btn"
