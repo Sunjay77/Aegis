@@ -1,3 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -42,10 +67,8 @@
   justify-content: center;
 }
 
-.form-container h2 {
-  margin: 0 0 15px 0;
-  font-size: 18px;
-  color: #333;
+input::placeholder {
+  text-align: center;
 }
 
 .form-row {
@@ -57,6 +80,7 @@
 .form-row select {
   flex: 1;
   margin-bottom: 0;
+  text-align: center;
 }
 
 /* input fields */
@@ -74,7 +98,7 @@ select {
 .btnExpense {
   width: 100%;
   padding: 12px;
-  background: #4caf50;
+  background: #333;
   color: white;
   border: none;
   border-radius: 8px;
@@ -83,12 +107,11 @@ select {
 }
 
 button:hover {
-  background: #45a049;
+  background: #3c3a3a;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
-
 
 /* Summary container */
 
@@ -105,7 +128,8 @@ button:hover {
 /* Expense List */
 
 .expenses-container {
-  margin: 20px;
+  height: 400px;
+  padding: 20px;
 }
 
 .expense-item {
@@ -144,4 +168,8 @@ button:hover {
   font-weight: bold;
   color: #333;
   text-transform: capitalize;
+}
+
+.expense-item {
+  margin-top: 30px;
 }

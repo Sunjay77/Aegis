@@ -42,6 +42,8 @@ function ExpenseForm({ addExpense }: Props) {
           placeholder="Enter expense amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          onFocus={(e) => (e.target.placeholder = "")}
+          onBlur={(e) => (e.target.placeholder = "Enter expense amount")}
         />
 
         <input
@@ -49,6 +51,8 @@ function ExpenseForm({ addExpense }: Props) {
           placeholder="Enter expense description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          onFocus={(e)=> (e.target.placeholder="")}
+          onBlur={(e) => (e.target.placeholder = "Enter expense description")}
         />
 
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
