@@ -16,7 +16,7 @@ function SummaryCard({ categorySpending }: Props) {
               <div key={cat} className="category-item">
                 <span className="category-name">{cat}</span>
 
-                <span className="category-amount">₹{amount.toFixed(2)}</span>
+                <span className="category-amount"> RS.{amount.toFixed(2)}</span>
               </div>
             ))}
           </div>
