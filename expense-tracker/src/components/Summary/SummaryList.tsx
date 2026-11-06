@@ -4,19 +4,24 @@ type Props = {
 
 function SummaryCard({ categorySpending }: Props) {
   return (
-    <div className="summary-container">
-      <div className="summary-card">
-        <h3>Spending by Category</h3>
+    <div>
+      <div className="rounded-lg bg-white p-3">
+        <h3 className="capitalize text-gray-800">Spending by Category</h3>
 
         {Object.entries(categorySpending).length === 0 ? (
-          <p className="empty-text">No expenses yet</p>
+          <p className="m-0 text-sm text-gray-400">No expenses yet</p>
         ) : (
-          <div className="category-list">
+          <div className="flex flex-col gap-2">
             {Object.entries(categorySpending).map(([cat, amount]) => (
-              <div key={cat} className="category-item">
-                <span className="category-name">{cat}</span>
+              <div
+                key={cat}
+                className="flex items-center justify-between rounded-md bg-gray-50 px-3 py-2"
+              >
+                <span className="capitalize text-gray-700">{cat}</span>
 
-                <span className="category-amount"> RS.{amount.toFixed(2)}</span>
+                <span className="font-bold text-gray-800">
+                  RS.{amount.toFixed(2)}
+                </span>
               </div>
             ))}
           </div>

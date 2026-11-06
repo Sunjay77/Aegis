@@ -35,8 +35,8 @@ function ExpenseForm({ addExpense }: Props) {
   };
 
   return (
-    <div className="form-container">
-      <div className="form-row">
+    <div className="mb-3 flex flex-col justify-center gap-3 rounded-lg bg-white p-5">
+      <div className="flex flex-col gap-3 md:flex-row">
         <input
           type="number"
           placeholder="Enter expense amount"
@@ -44,6 +44,7 @@ function ExpenseForm({ addExpense }: Props) {
           onChange={(e) => setAmount(e.target.value)}
           onFocus={(e) => (e.target.placeholder = "")}
           onBlur={(e) => (e.target.placeholder = "Enter expense amount")}
+          className="w-full flex-1 p-3 text-center text-sm"
         />
 
         <input
@@ -53,9 +54,14 @@ function ExpenseForm({ addExpense }: Props) {
           onChange={(e) => setDescription(e.target.value)}
           onFocus={(e)=> (e.target.placeholder="")}
           onBlur={(e) => (e.target.placeholder = "Enter expense description")}
+          className="w-full flex-1 p-3 text-center text-sm"
         />
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select
+          className="w-full flex-1 p-3 text-center text-sm"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
           <option value="Food">Food</option>
 
           <option value="Transportation">Transportation</option>
@@ -66,7 +72,10 @@ function ExpenseForm({ addExpense }: Props) {
         </select>
       </div>
 
-      <button className="btnExpense" onClick={handleAddExpense}>
+      <button
+        className="w-full rounded-lg border-0 bg-gray-800 p-3 text-base font-bold text-white hover:cursor-pointer hover:bg-gray-700"
+        onClick={handleAddExpense}
+      >
         Add Expense
       </button>
     </div>
